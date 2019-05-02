@@ -219,13 +219,21 @@ local Item =
   Bottle = 
   {
     Name = "bottle",
-    Texture = love.graphics.newImage("Textures/iron-ore.png"),
+    Texture = love.graphics.newImage("Textures/NoTexture.png"),
   },
   Furnace = 
   {
     Name = "furnace",
     Texture = love.graphics.newImage("Textures/NoTexture.png"),
-    Entity = "Furnace"
+    Entity = "Furnace",
+    Stackable = 100,
+  },
+  OreCrackingStation = 
+  {
+    Name = "ore cracking station",
+    Texture = love.graphics.newImage("Textures/NoTexture.png"),
+    Entity = "OreCrackingStation",
+    Stackable = 100,
   },
 }
 

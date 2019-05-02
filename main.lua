@@ -92,6 +92,12 @@ function love.load()
           setmetatable(Item, {__index = Game.Prototypes.Item.Bottle})
           AddItem(self.Inventory, Item)
         end
+        Item = {Count = 1}
+        setmetatable(Item, {__index = Game.Prototypes.Item.Furnace})
+        AddItem(self.Inventory, Item)
+        Item = {Count = 1}
+        setmetatable(Item, {__index = Game.Prototypes.Item.OreCrackingStation})
+        AddItem(self.Inventory, Item)
       end,
       
       Draw = function(self)
@@ -133,23 +139,24 @@ function love.load()
             love.graphics.draw(v.Texture, x, y)
             
             if v.Count then
-              love.graphics.setFont(Fonts[10])
               Color.Set(Color.Orange)
+              love.graphics.setFont(Fonts[10])
               love.graphics.print(v.Count, x, y + 26)
             end
             if v.Content then
+              if v.Content == "Empty" then Color.Set(Color.Red) else Color.Set(Color.Orange) end
               love.graphics.setFont(Fonts[10])
-              Color.Set(Color.Red)
               love.graphics.print(v.Content, x, y + 26)
             end
             if v.ContentCount then
               love.graphics.setFont(Fonts[10])
-              Color.Set(Color.Red)
+              Color.Set(Color.BlueLite)
               love.graphics.print(v.ContentCount, x+16, y + 26)
             end
           end
         end
         
+        Color.Set(Color.White)
         if self.MouseItem then
           love.mouse.setVisible(false)
           love.graphics.draw(self.MouseItem.Texture, Game.Mouse.x, Game.Mouse.y, 0, 0.5, 0.5)
@@ -170,15 +177,16 @@ function love.load()
           if self.MouseItem then
             if self.Inventory[k] then
               local Item = self.MouseItem
-              --print("test1")
+              print("test1")
               setmetatable(Item, getmetatable(self.MouseItem))
               
               self.MouseItem = self.Inventory[k]
               setmetatable(self.MouseItem, getmetatable(self.Inventory[k]))
+              table.remove(self.Inventory, k)
               AddItem(self.Inventory, Item)
               --setmetatable(self.Inventory[k], getmetatable(Item))
             else
-              --print("test2")
+              print("test2")
               AddItem(self.Inventory, self.MouseItem)
               --setmetatable(self.Inventory[#self.Inventory], getmetatable(self.MouseItem))
               
@@ -186,7 +194,7 @@ function love.load()
             end
           else
             if self.Inventory[k] then
-              --print("test3")
+              print("test3")
               self.MouseItem = self.Inventory[k]
               setmetatable(self.MouseItem, getmetatable(self.Inventory[k]))
               table.remove(self.Inventory, k)
