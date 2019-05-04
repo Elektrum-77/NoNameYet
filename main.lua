@@ -217,20 +217,37 @@ function love.load()
         end
         if Key == "r" then
           local BR = self.BlueprintRotation -- this is did in that way to be "read friendly" / understable and readable
-          if BR.MaxX == 1 and BR.MaxY == 1 then
-            BR.MinX = -1
-            BR.MaxX = 0
-          elseif BR.MaxY == 1 then
-            BR.MinY = -1
-            BR.MaxY = 0
-          elseif BR.Max == 0 then
-            BR.MinX = 0
-            BR.MaxX = 1
+          if not love.keyboard.isDown("lshift") then
+            if BR.MaxX == 1 and BR.MaxY == 1 then
+              BR.MinX = -1
+              BR.MaxX = 0
+            elseif BR.MaxY == 1 then
+              BR.MinY = -1
+              BR.MaxY = 0
+            elseif BR.MaxX == 0 then
+              BR.MinX = 0
+              BR.MaxX = 1
+            else
+              BR.MinY = 0
+              BR.MaxY = 1
+            end
           else
-            BR.MinY = 0
-            BR.MaxY = 1
+            if BR.MaxX == 1 and BR.MaxY == 1 then
+              BR.MinY = -1
+              BR.MaxY = 0
+            elseif BR.MaxX == 1 then
+              BR.MinX = -1
+              BR.MaxX = 0
+            elseif BR.MaxY == 0 then
+              BR.MinY = 0
+              BR.MaxY = 1
+            else
+              BR.MinX = 0
+              BR.MaxX = 1
+            end
           end
           self.BlueprintRotation = BR
+          print(BR.MaxY, BR.MaxX)
         end
         if Key == "a" then
           AddItem(self.Inventory, self.MouseItem)
@@ -278,9 +295,9 @@ function love.load()
               local Obstacle
               
               for i = 1, 2 do
-                for Y = Game.Mouse.MapY + self.BlueprintRotation.MinY, Game.Mouse.MapY + self.BlueprintRotation.MaxY do
-                  for X = Game.Mouse.MapX + self.BlueprintRotation.MinX, Game.Mouse.MapX + self.BlueprintRotation.MaxX do
-                    
+                for y = Game.Mouse.MapY + self.BlueprintRotation.MinY, Game.Mouse.MapY + self.BlueprintRotation.MaxY do
+                  for x = Game.Mouse.MapX + self.BlueprintRotation.MinX, Game.Mouse.MapX + self.BlueprintRotation.MaxX do
+                    local X, Y = x, y
                     local RY, RX = Game.Mouse.RegionY, Game.Mouse.RegionX
                     if Y > 20 then
                       Y = Y - 41
