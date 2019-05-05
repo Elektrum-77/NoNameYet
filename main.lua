@@ -297,8 +297,8 @@ function love.load()
               for i = 1, 2 do
                 for y = Game.Mouse.MapY + self.BlueprintRotation.MinY, Game.Mouse.MapY + self.BlueprintRotation.MaxY do
                   for x = Game.Mouse.MapX + self.BlueprintRotation.MinX, Game.Mouse.MapX + self.BlueprintRotation.MaxX do
-                    local X, Y = x, y
-                    local RY, RX = Game.Mouse.RegionY, Game.Mouse.RegionX
+                    local MinX, MinY
+                    local RY, RX, X, Y = Game.Mouse.RegionY, Game.Mouse.RegionX, x, y
                     if Y > 20 then
                       Y = Y - 41
                       RY = RY + 1
